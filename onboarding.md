@@ -68,6 +68,7 @@ Follow **GitHub Flow**:
 2. **Create Issues** for bugs or enhancements.
 
 3. **Branch Naming Convention**:
+
    - For bugs: `bugfix/<issue-number>`
    - For features: `feature/<feature-name>`
 
@@ -152,7 +153,7 @@ task-manager-cli/
 │
 ├── main.py                    # Entry point for CLI app
 ├── requirements.txt           # Project dependencies
-├── pyproject.toml             # Project setup for pip
+├── setup.py                   # Project setup for pip
 └── README.md                  # Project documentation
 ```
 

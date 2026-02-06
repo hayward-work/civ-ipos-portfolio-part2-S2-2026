@@ -5,8 +5,7 @@ from src.task import Task
 
 def test_file_handler():
     """
-    Test the binary file content by loading tasks
-    and printing them in a readable format.
+    Test the binary file content by loading tasks and printing them in a readable format.
     """
     # Load tasks from the binary file
     tasks = load_tasks()
@@ -15,7 +14,7 @@ def test_file_handler():
         print("No tasks found in the binary file.")
     else:
         print("Tasks loaded from the binary file:")
-        pprint([task.to_dict() for task in tasks])  # Convert tasks to dict
+        pprint([task.to_dict() for task in tasks])  # Convert tasks to dict for readability
 
 
 if __name__ == "__main__":
@@ -24,6 +23,7 @@ if __name__ == "__main__":
         Task("Task 1", "Description 1", "12-12-2024", "pending"),
         Task("Task 2", "Description 2", "15-12-2024", "completed"),
     ]
+
 
     # Save tasks to the binary file
     save_tasks(sample_tasks)
