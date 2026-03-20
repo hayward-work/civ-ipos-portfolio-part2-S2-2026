@@ -23,13 +23,15 @@ This activity requires you to:
 ### 1. Familiarise Yourself with the Project
 
 1. **Clone the repository**:
-   ```bash
-   git clone <repository-url>
-   cd pin_civ_assessment_ipos_portfolio_2
-   ```
+
+```bash
+git clone <repository-url>
+cd pin_civ_assessment_ipos_portfolio_2
+```
+
 2. Use the Virtual Environment
 
-To **activate a virtual environment** in Python, the command varies depending on your **operating system** and the **shell/terminal** you are using. Here's a clear step-by-step guide:
+NOTE: **activate a virtual environment** in Python, the command varies depending on your **operating system** and the **shell/terminal** you are using. Here's a clear step-by-step guide:
 
 ---
 
@@ -41,35 +43,32 @@ Before activating, you must create the virtual environment in your project folde
 python -m venv .venv
 ```
 
-- `.venv` is the directory name for the virtual environment (you can name it whatever you want).
+`.venv` is the directory name for the virtual environment (you can name it whatever you want).
 
 ---
 
 1. **Activate the environment**
 
-**For Windows**
-**Using Command Prompt (`cmd`)**:
+**For Windows**:
 
 ```cmd
 .venv\Scripts\activate
 ```
 
-**Using PowerShell**:
-
 ```powershell
 .\.venv\Scripts\Activate
 ```
 
-**For Mac/Linux & Windows**
+**For Mac/Linux & Gitbash**
 
 In a **Bash** or **Zsh** terminal, run:
 
 ```bash
 source .venv/bin/activate  #Mac/Linux
-source .venv/Scripts/activate #Windows
+source .venv/Scripts/activate #Windows Gitbash
 ```
 
-**Use the setup files to manager the environment & add the scripts to run the app**
+**Use the pyproject.toml files to manager the environment & add the scripts to run the app**
 
 ```bash
 python -m pip install -e .
@@ -78,16 +77,18 @@ python -m pip install -e .
 ---
 
 2. **To update project dependences dependencies**:
-   ```bash
-   pip install -r requirements.txt #(may require python -m)
-   ```
+
+```bash
+pip install -r requirements-dev.txt #(may require python -m)
+```
+
 3. **Run the application**:
 
-   ```bash
-   python main.py #(may require python -m)
-   ```
+```bash
+python main.py #(may require python -m)
+```
 
-   Explore the current functionality. Try adding, deleting, and listing tasks.
+Explore the current functionality. Try adding, deleting, and listing tasks.
 
 4. **Read the Documentation**:
    - Review the `onboarding.md` file for project setup and guidelines.
@@ -144,13 +145,13 @@ Use debugging tools (e.g., breakpoints, print statements, IDE tools) to identify
 1. **Locally**: Create a new branch for each Issue.
 
 ```bash
-   git checkout -b issue-<issue_number>
+git checkout -b issue-<issue_number>
 ```
 
 2. **Remotely**: Push the branch to GitHub.
 
 ```bash
-   git push -u origin issue-<issue_number>
+git push -u origin issue-<issue_number>
 ```
 
 ---
@@ -160,7 +161,6 @@ Use debugging tools (e.g., breakpoints, print statements, IDE tools) to identify
 1. **Select Components**: Research and integrate suitable Python libraries:
 2. **Write Test Cases**:  
    Using mock & patch objects write unit tests for the issues you raised using the **`unittest` framework**.
-
    - Test invalid dates.
    - Test duplicate task prevention.
    - Test new CLI behavior (if applicable).
@@ -168,7 +168,7 @@ Use debugging tools (e.g., breakpoints, print statements, IDE tools) to identify
 3. Run tests to confirm that your new test cases fail:
 
 ```bash
-   python -m unittest discover test
+python -m unittest discover test
 ```
 
 ---
@@ -178,9 +178,10 @@ Use debugging tools (e.g., breakpoints, print statements, IDE tools) to identify
 1. Incrementally integrate the selected reusable components into the project.
 2. Address the bugs/issues raised in your branch.
 3. Rerun the tests to ensure they pass:
-   ```bash
-   python -m unittest discover test
-   ```
+
+```bash
+python -m unittest discover test
+```
 
 ---
 
@@ -190,19 +191,48 @@ Use debugging tools (e.g., breakpoints, print statements, IDE tools) to identify
 2. Update the **README.md** to include:
    - New dependencies.
    - Instructions for running and testing the updated app.
-3. Update the **`requirements.txt`** file with any new libraries:
+3. Update the **`requirements-dev.txt`** file with any new libraries:
 
 ```bash
-   pip freeze > requirements.txt
+pip freeze > requirements.txt
 ```
 
 ---
 
-### 8. Submit a Pull Request (PR)
+### 8. Run your workflows locally
+
+**Before pushing your code to GitHub, you should run flake8 locally to check for code quality issues.**
+
+- If flake8 fails locally, your GitHub Actions workflow will also fail.
+- You cannot merge without these passing.
+
+1. Run flake8 - from the root of the project (where .flake8 is located):
+
+```bash
+python -m flake8 /src
+
+# Optional detailed report
+python -m flake8 . --statistics --show-source
+```
+
+2. What to do
+   - Fix any errors shown in the output
+   - Re-run flake8 until no errors remain
+
+3. Thess come from the workflow some common issues you may see
+   - Unused imports or variables
+   - Line length too long
+   - Functions too complex
+   - Debug print() statements (not allowed)
+
+---
+
+### 9. Submit a Pull Request (PR)
+
+**Note you must use the PULL and ISSUE templates provided**
 
 1. Open a Pull Request (PR) for each Issue against the `main` branch.
 2. Ensure your PR description includes:
-
    - A clear summary of changes.
    - The Issue number it addresses (`fixes #<issue_number>`).
    - Evidence that the new test cases pass.
@@ -217,14 +247,16 @@ Use debugging tools (e.g., breakpoints, print statements, IDE tools) to identify
 
 ---
 
-### 9. Seek PR Approval
+### 10. Seek PR Approval
+
+#### DONT MISS THIS STEP AS YOU WILL HAVE TO REVERT IT BACK
 
 - Request your lecturer as a reviewer on your PR.
 - Address any feedback provided.
 
 ---
 
-### 10. Close the Issue
+### 11. Close the Issue
 
 When the PR is merged, the Issue will be automatically closed if you included "fixes #\<issue_number\>" in the PR description.
 
@@ -253,7 +285,7 @@ When the PR is merged, the Issue will be automatically closed if you included "f
    - Unit tests that expose and confirm fixes.
 5. **Documentation**:
    - Updated inline comments and README.md.
-   - Updated `requirements.txt`.
+   - Updated `requirements-dev.txt`.
 6. **PR Workflow**:
    - Demonstrated initial test failures and successful fixes.
    - Approval workflow completed.

@@ -1,17 +1,30 @@
+---
+name: Pull Request
+about: Submit your completed changes for review
+title: "[PR] "
+labels: ["student-submission"]
+assignees: []
+---
+
 ## Description
+
 [Provide a brief description of the changes in this PR]
 
 ## Type of change
+
 Please delete options that are not relevant.
+
 - [ ] Bug fix (non-breaking change which fixes an issue)
 - [ ] New feature (non-breaking change which adds functionality)
 - [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
 - [ ] This change requires a documentation update
 
 ## How Has This Been Tested?
+
 [Describe the tests that you ran to verify your changes]
 
 ## Checklist:
+
 - [ ] I have followed the coding style guidelines of this project
 - [ ] I have reviewed my own code
 - [ ] I have commented hard-to-understand areas of my code
@@ -22,4 +35,5 @@ Please delete options that are not relevant.
 - [ ] New and existing unit tests pass locally with my changes
 
 ## Related Issue(s)
+
 [Please link to the issue(s) this PR addresses using GitHub's keyword syntax, e.g., "Closes #123"]
