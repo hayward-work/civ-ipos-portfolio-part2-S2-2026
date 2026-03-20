@@ -45,8 +45,8 @@ class Task:
         Create a Task object from a dictionary representation.
 
         Args:
-            task_data (dict): A dictionary containing task details with keys:
-                              'title', 'description', 'due_date', and optionally 'status'.
+            task_data (dict): A dictionary with keys:'title', 'description',
+                                'due_date', optionally 'status'.
 
         Returns:
             Task: A new Task object created from the dictionary data.
@@ -57,4 +57,3 @@ class Task:
             task_data["due_date"],
             task_data.get("status", "pending")
         )
-

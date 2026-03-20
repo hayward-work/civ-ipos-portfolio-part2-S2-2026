@@ -1,5 +1,5 @@
 from src.task import Task
-from src.file_handler import load_tasks, save_tasks
+from src.file_handler import save_tasks
 from datetime import datetime
 
 
@@ -67,7 +67,8 @@ def list_tasks(tasks, status=None):
 
     Args:
         tasks (list): The list of existing Task objects.
-        status (str, optional): The status to filter tasks by (e.g., "pending" or "completed").
+        status (str, optional): The status to filter tasks
+        by (e.g., "pending" or "completed").
 
     Returns:
         None
@@ -89,7 +90,10 @@ def list_tasks(tasks, status=None):
         print("No tasks found.")
         return
     for task in filtered:
-        print(f"{task.title} | {task.description} | Due: {task.due_date} | Status: {task.status}")
+        print(
+            f"{task.title} | {task.description} | "
+            f"Due: {task.due_date} | Status: {task.status}"
+        )
 
 
 def filter_tasks_by_status(tasks, status):

@@ -1,9 +1,8 @@
 import pickle
 import os
-from pprint import pprint
-from src.task import Task
 
 TASK_FILE = "tasks.bin"
+
 
 def load_tasks():
     """
