@@ -1,7 +1,7 @@
 from src.task import Task
 from src.file_handler import save_tasks
 from datetime import datetime
-
+from loguru import logger
 
 def add_task(tasks, title, description, due_date):
     """

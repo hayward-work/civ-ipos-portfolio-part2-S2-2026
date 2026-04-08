@@ -1,5 +1,6 @@
 import pickle
 import os
+from loguru import logger
 
 TASK_FILE = "tasks.bin"
 
