@@ -7,6 +7,10 @@ from rich import table, console
 from src.task_manager import TaskManager as task_manager
 
 class UserInterface:
+    """
+    Facilitates user interaction with the program using the command
+    line interface.
+    """
     def __init__(self):
         # class RegexPatterns(RegexHighlighter):
         #     base_style = Style()
@@ -16,6 +20,13 @@ class UserInterface:
 
 
     def create_table(self):
+        """
+        Creates the table and populates it with tasks requested from
+        the task manager class.
+
+        Returns:
+            Table: table with tasks.
+        """
         new_table = table.Table("Title", "Description", "Due Date", table.Column("Status", highlight=True), title="Tasks")
         for task in task_manager.tasks:
             # TODO: resolve colours having no effect.
@@ -25,6 +36,13 @@ class UserInterface:
         return new_table
 
     def run(self):
+        """
+        Implements main loop of the user interface, accepts user input
+        via the command line interface, and displays the task table.
+
+        Returns:
+            None
+        """
         while True:
             self.rich_console.print("\nTask Manager CLI")
             self.rich_console.print("1. Add Task")
