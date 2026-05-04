@@ -1,30 +1,48 @@
 from rich import table, console
 # from rich.style import Style
-from rich.table import Column
 # from rich.highlighter import RegexHighlighter
-from rich.theme import Theme
-# in hindsight, it may have been easier just to pretty print all this
+# from rich.theme import Theme
+# in hindsight, it may have been easier just to pretty print all the table stuff
 
 from src.task_manager import TaskManager as task_manager
 
 class UserInterface:
+    """
+    Facilitates user interaction with the program using the command
+    line interface.
+    """
     def __init__(self):
         # class RegexPatterns(RegexHighlighter):
         #     base_style = Style()
         #     highlights = [r"pending, completed"]
-        self.rich_console = console.Console(highlight=True, theme=Theme({"pending": "red", "completed": "green"}))
+        self.rich_console = console.Console(highlight=True)
         self.task_table = self.create_table()
 
 
     def create_table(self):
-        new_table = table.Table("Title", "Description", "Due Date", Column("Status", highlight=True), title="Tasks")
+        """
+        Creates the table and populates it with tasks requested from
+        the task manager class.
+
+        Returns:
+            Table: table with tasks.
+        """
+        new_table = table.Table("Title", "Description", "Due Date", table.Column("Status", highlight=True), title="Tasks")
         for task in task_manager.tasks:
+            # TODO: resolve colours having no effect.
             status = "[red]Pending" if task.status == "pending" else "[green]Completed"
             print(status)
             new_table.add_row(task.title, task.description, task.due_date, status)
         return new_table
 
     def run(self):
+        """
+        Implements main loop of the user interface, accepts user input
+        via the command line interface, and displays the task table.
+
+        Returns:
+            None
+        """
         while True:
             self.rich_console.print("\nTask Manager CLI")
             self.rich_console.print("1. Add Task")
@@ -51,9 +69,11 @@ class UserInterface:
                     else:
                         print("Task not found.")
                 case "3":
-                    if len(task_manager.tasks) > 0:
-                        self.rich_console.print(self.task_table)
-                    else: print("There are no tasks to display.")
+                    # Decided to still print empty table
+                    # as this gives the user feedback
+                    # that there *is* a table it's just empty
+                    if len(task_manager.tasks) <= 0: print("There are no tasks to display.")
+                    self.rich_console.print(self.task_table)
                 case "4":
                     print("Exiting Task Manager.")
                     break
