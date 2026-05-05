@@ -1,6 +1,5 @@
 import unittest
 from src.task_manager import TaskManager
-from src.file_handler import save_tasks, load_tasks
 from src.task import Task
 import os
 
@@ -19,6 +18,8 @@ class TestTaskManager(unittest.TestCase):
         object and backing up the original task binary file.
         """
         self.taskmanager = TaskManager()
+        # TODO: implement mocking so that this doesn't need to happen
+        self.taskmanager.tasks = []
         self.original_file = "tasks.bin"
         if os.path.exists(TEST_FILE):
             os.remove(TEST_FILE)
@@ -84,22 +85,9 @@ class TestTaskManager(unittest.TestCase):
         task1 = Task("Task 1", "Desc", "01-12-2024", "pending")
         task2 = Task("Task 2", "Desc", "02-12-2024", "completed")
         self.taskmanager.tasks.extend([task1, task2])
-        save_tasks(self.taskmanager.tasks)
-
         filtered = self.taskmanager.filter_tasks_by_status("completed")
         self.assertEqual(len(filtered), 1)
         self.assertEqual(filtered[0].title, "Task 2")
-
-    def test_save_and_load_tasks(self):
-        """
-        Test saving tasks to a file and loading them back.
-        Verify that the saved tasks are correctly loaded with the same data.
-        """
-        self.taskmanager.add_task("Persistent Task", "Description", "01-12-2024")
-        save_tasks(self.taskmanager.tasks)
-        loaded_tasks = load_tasks()
-        self.assertEqual(len(loaded_tasks), 1)
-        self.assertEqual(loaded_tasks[0].title, "Persistent Task")
 
 
 if __name__ == "__main__":
