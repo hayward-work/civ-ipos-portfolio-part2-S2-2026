@@ -75,7 +75,8 @@ class TaskManager:
 
         Args:
             tasks (list): The list of existing Task objects.
-            status (str): The status to filter tasks by (e.g., "pending" or "completed").
+            status (str): The status to filter tasks by
+            (e.g., "pending" or "completed").
 
         Returns:
             list: A list of Task objects that match the specified status.
