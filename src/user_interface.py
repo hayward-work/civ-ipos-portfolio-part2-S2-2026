@@ -70,10 +70,10 @@ class UserInterface:
                     title = input("Title: ")
                     description = input("Description: ")
                     due_date = input("Due Date (DD-MM-YYYY): ")
-                    if self.task_manager.add_task(title = title,
-                        description = description,
-                        due_date = due_date
-                    ):
+                    if self.task_manager.add_task(title,
+                                                  description,
+                                                  due_date
+                                                  ):
                         for task in self.task_manager.tasks:
                             if task.title == title:
                                 self.task_table.add_row(
