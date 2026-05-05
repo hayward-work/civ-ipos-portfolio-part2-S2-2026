@@ -1,10 +1,11 @@
 from rich import table, console
 # from rich.style import Style
 # from rich.highlighter import RegexHighlighter
-# from rich.theme import Theme
-# in hindsight, it may have been easier just to pretty print all the table stuff
+from rich.theme import Theme
+# in hindsight, it may have been easier just to pretty print all this
 
-from src.task_manager import TaskManager as task_manager
+from src.task_manager import TaskManager
+
 
 class UserInterface:
     """
@@ -12,12 +13,15 @@ class UserInterface:
     line interface.
     """
     def __init__(self):
-        # class RegexPatterns(RegexHighlighter):
-        #     base_style = Style()
-        #     highlights = [r"pending, completed"]
-        self.rich_console = console.Console(highlight=True)
+        self.task_manager = TaskManager()
+        self.rich_console = console.Console(
+            highlight=True,
+            theme=Theme(
+                {"pending": "red",
+                 "completed": "green"}
+            )
+        )
         self.task_table = self.create_table()
-
 
     def create_table(self):
         """
@@ -27,12 +31,22 @@ class UserInterface:
         Returns:
             Table: table with tasks.
         """
-        new_table = table.Table("Title", "Description", "Due Date", table.Column("Status", highlight=True), title="Tasks")
-        for task in task_manager.tasks:
-            # TODO: resolve colours having no effect.
-            status = "[red]Pending" if task.status == "pending" else "[green]Completed"
-            print(status)
-            new_table.add_row(task.title, task.description, task.due_date, status)
+        new_table = table.Table(
+            "Title",
+            "Description",
+            "Due Date",
+            table.Column("Status", highlight=True),
+            title="Tasks")
+        for task in self.task_manager.tasks:
+            if task.status == "pending":
+                status = "[red]Pending"
+            else:
+                status = "[green]Completed"
+            new_table.add_row(
+                task.title,
+                task.description,
+                task.due_date,
+                status)
         return new_table
 
     def run(self):
@@ -56,14 +70,24 @@ class UserInterface:
                     title = input("Title: ")
                     description = input("Description: ")
                     due_date = input("Due Date (DD-MM-YYYY): ")
-                    task_manager.add_task(title, description, due_date)
-                    for task in task_manager.tasks:
-                        if task.title == title:
-                            self.task_table.add_row(task.title, task.description, task.due_date, task.status)
-                    self.rich_console.print("Task Added")
+                    if self.task_manager.add_task(title = title,
+                        description = description,
+                        due_date = due_date
+                    ):
+                        for task in self.task_manager.tasks:
+                            if task.title == title:
+                                self.task_table.add_row(
+                                    task.title,
+                                    task.description,
+                                    task.due_date,
+                                    task.status
+                                )
+                        self.rich_console.print("Task Added")
+                    else:
+                        print("Something has gone wrong. Please try again.")
                 case "2":
                     title = input("Title of the task to delete: ")
-                    if task_manager.delete_task(title):
+                    if self.task_manager.delete_task(title):
                         print("Task deleted successfully.")
                         self.task_table = self.create_table()
                     else:
@@ -72,7 +96,8 @@ class UserInterface:
                     # Decided to still print empty table
                     # as this gives the user feedback
                     # that there *is* a table it's just empty
-                    if len(task_manager.tasks) <= 0: print("There are no tasks to display.")
+                    if len(self.task_manager.tasks) <= 0:
+                        print("There are no tasks to display.")
                     self.rich_console.print(self.task_table)
                 case "4":
                     print("Exiting Task Manager.")
