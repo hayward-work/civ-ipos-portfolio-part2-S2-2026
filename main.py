@@ -1,10 +1,9 @@
 from src.task_manager import add_task, delete_task, list_tasks
-from src.file_handler import FileHandler as file_handler
+from src.file_handler import load_tasks
 
 
 def main():
-    fh = file_handler()
-    tasks = fh.load_tasks()
+    tasks = load_tasks()
     while True:
         print("\nTask Manager CLI")
         print("1. Add Task")

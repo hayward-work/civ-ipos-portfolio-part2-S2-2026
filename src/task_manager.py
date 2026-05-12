@@ -1,8 +1,7 @@
 from src.task import Task
-from src.file_handler import FileHandler as file_handler
+from src.file_handler import save_tasks
 from datetime import datetime
 
-file_handler = file_handler()
 
 def add_task(tasks, title, description, due_date):
     """
@@ -21,8 +20,7 @@ def add_task(tasks, title, description, due_date):
         ValueError: If the due date is not in the correct format.
 
     Side Effects:
-        - Saves the updated task list to a file using functionality
-          provided by file_handler.`.
+        - Saves the updated task list to a file using `save_tasks`.
     """
     # Prevent duplicate tasks
     if any(task.title == title for task in tasks):
@@ -37,7 +35,7 @@ def add_task(tasks, title, description, due_date):
         return False
 
     tasks.append(Task(title, description, due_date))
-    file_handler.save_tasks(tasks)
+    save_tasks(tasks)
     return True
 
 
@@ -53,12 +51,12 @@ def delete_task(tasks, title):
         bool: True if the task was found and deleted, False otherwise.
 
     Side Effects:
-        - Saves the updated task list to a file using `file_handler.save_tasks`.
+        - Saves the updated task list to a file using `save_tasks`.
     """
     for task in tasks:
         if task.title == title:
             tasks.remove(task)
-            file_handler.save_tasks(tasks)
+            save_tasks(tasks)
             return True
     return False
 
