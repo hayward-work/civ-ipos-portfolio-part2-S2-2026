@@ -46,3 +46,11 @@ class BinaryFileHandler(FileHandler):
             # stack overflow it's a pycharm specific issue:
             # https://stackoverflow.com/questions/79049420/
             pickle.dump(tasks, file)
+
+class iCalFileHandler(FileHandler):
+    def load_tasks(self):
+        ...
+
+    def save_tasks(self, tasks):
+        ...
+
