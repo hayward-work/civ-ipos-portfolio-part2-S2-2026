@@ -5,6 +5,7 @@ import os
 
 TEST_FILE = "test_tasks.bin"
 
+# TODO: Refactor tests/test_task_manager.py so it uses mocks/patching instead of renaming or deleting the real tasks.bin.
 
 class TestTaskManager(unittest.TestCase):
     """

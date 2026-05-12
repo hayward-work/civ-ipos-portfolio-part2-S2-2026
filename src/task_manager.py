@@ -2,6 +2,7 @@ from src.task import Task
 from src.file_handler import load_tasks, save_tasks
 from datetime import datetime
 
+# TODO: Fix the incorrect docstrings in src/task_manager.py so they match the current class methods and parameters.
 
 class TaskManager:
 
@@ -53,14 +54,13 @@ class TaskManager:
         Delete a task from the task list based on its title.
 
         Args:
-            tasks (list): The list of existing Task objects.
             title (str): The title of the task to be deleted.
 
         Returns:
             bool: True if the task was found and deleted, False otherwise.
 
         Side Effects:
-            - Saves the updated task list to a file using `save_tasks`.
+            - Saves the updated task list to a file using save_tasks`.
         """
         for task in self.tasks:
             if task.title == title:
@@ -74,7 +74,6 @@ class TaskManager:
         Filter tasks by their status.
 
         Args:
-            tasks (list): The list of existing Task objects.
             status (str): The status to filter tasks by
             (e.g., "pending" or "completed").
 

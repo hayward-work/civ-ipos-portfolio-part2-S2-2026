@@ -6,6 +6,9 @@ from rich.theme import Theme
 
 from src.task_manager import TaskManager
 
+# TODO: Add automated tests for the new UI behaviour. At the moment the PR changes CLI output, but there are no tests covering UserInterface.
+# DONE: Make the Rich status formatting consistent for newly added tasks as well as existing tasks.
+
 
 class UserInterface:
     """
@@ -38,15 +41,11 @@ class UserInterface:
             table.Column("Status", highlight=True),
             title="Tasks")
         for task in self.task_manager.tasks:
-            if task.status == "pending":
-                status = "[red]Pending"
-            else:
-                status = "[green]Completed"
             new_table.add_row(
                 task.title,
                 task.description,
                 task.due_date,
-                status)
+                task.status)
         return new_table
 
     def run(self):
