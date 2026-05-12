@@ -21,7 +21,6 @@ class FileHandler:
                 return pickle.load(file)
         return []
 
-
     def save_tasks(self, tasks):
         """
         Save a list of tasks to a binary file using the pickle module.

@@ -1,8 +1,9 @@
 from src.task import Task
-from src.file_handler import FileHandler as file_handler
+from src.file_handler import FileHandler as FileHandler
 from datetime import datetime
 
-file_handler = file_handler()
+file_handler = FileHandler()
+
 
 def add_task(tasks, title, description, due_date):
     """

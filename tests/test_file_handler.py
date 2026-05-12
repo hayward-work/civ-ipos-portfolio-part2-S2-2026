@@ -3,6 +3,7 @@ import unittest
 from src.file_handler import FileHandler
 from src.task import Task
 
+
 class TestFileHandler(unittest.TestCase):
     def setUp(self):
         self.file_handler = FileHandler()
@@ -10,6 +11,7 @@ class TestFileHandler(unittest.TestCase):
             Task("Task 1", "Description 1", "12-12-2024", "pending"),
             Task("Task 2", "Description 2", "15-12-2024", "completed"),
         ]
+
     def tearDown(self) -> None:
         if os.path.exists("tasks.bin"):
             os.remove("tasks.bin")
@@ -24,9 +26,10 @@ class TestFileHandler(unittest.TestCase):
         Returns
             None
         """
-        (self.assertNotEqual([task.to_dict() for task in self.file_handler.load_tasks()],
-                             [task.to_dict() for task in self.sample_tasks])
-         and self.assertTrue(len(self.file_handler.load_tasks()) == 0))
+        (self.assertNotEqual(
+            [task.to_dict() for task in self.file_handler.load_tasks()],
+            [task.to_dict() for task in self.sample_tasks]
+        ) and self.assertTrue(len(self.file_handler.load_tasks()) == 0))
         self.file_handler.save_tasks(self.sample_tasks)
         self.assertEqual([task.to_dict() for task in self.file_handler.load_tasks()],
                          [task.to_dict() for task in self.sample_tasks])
@@ -43,6 +46,7 @@ class TestFileHandler(unittest.TestCase):
         original_size = os.path.getsize("tasks.bin")
         self.file_handler.save_tasks(self.sample_tasks)
         self.assertLess(original_size, os.path.getsize("tasks.bin"))
+
 
 if __name__ == "__main__":
     unittest.main()
