@@ -4,9 +4,9 @@ from datetime import date, datetime
 # TODO: REMOVE THIS
 
 import icalendar
-from abc import ABC, abstractmethod
+# TODO: replace with more modern ical module
 
-from icalendar.attr import status_property
+from abc import ABC, abstractmethod
 
 
 class FileHandler(ABC):
