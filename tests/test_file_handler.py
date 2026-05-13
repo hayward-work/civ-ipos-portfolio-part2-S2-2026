@@ -1,4 +1,3 @@
-import unittest
 import os
 import unittest
 from src.file_handler import FileHandler
