@@ -1,5 +1,6 @@
 import unittest
 import requests
+import os
 from src.file_handler import IcsFileHandler
 from src.task import Task
 
@@ -7,12 +8,26 @@ class TestIcsFileHandler(unittest.TestCase):
     def setUp(self):
         self.ICS = IcsFileHandler("test_ical.ics")
 
+    def tearDown(self):
+        with open(self.ICS.target_file, "w"):
+            pass
+
     def test_save_task(self):
+        original_size = os.path.getsize(self.ICS.target_file)
         self.ICS.save_tasks(tasks =[
                 Task("Task 1", "Description 1", "12-12-2024", "pending"),
                 Task("Task 2", "Description 2", "15-12-2024", "completed"),
             ])
+        self.assertLess(original_size, os.path.getsize(self.ICS.target_file))
 
+    def test_load_tasks(self):
+        sample_data = [
+                Task("Task 1", "Description 1", "12-12-2024", "pending"),
+                Task("Task 2", "Description 2", "15-12-2024", "completed"),
+            ]
+        self.ICS.save_tasks(tasks = sample_data)
+        print(self.ICS.load_tasks())
+        self.assertTrue(self.ICS.load_tasks()==sample_data)
 
     def test_validate_ics(self):
         r = requests.get(url="https://icalendar.org/validator.html")

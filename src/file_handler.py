@@ -70,6 +70,22 @@ class IcsFileHandler(FileHandler):
             list: A list of Task objects loaded from the iCal .ics file.
                 If the file does not exist, an empty list is returned.
         """
+        todo_status_dict = {"TENTATIVE":"pending",
+                            "CONFIRMED":"completed"}
+        tasks = []
+        with open(self.target_file, 'rb') as ics:
+            ecal = icalendar.Calendar.from_ical(ics.read())
+            for component in ecal.walk(name="VEVENT"):
+                # TODO: PARSE VTEXT BACK INTO STRING
+                tasks.append(
+                    {"title": component.get('summary'),
+                     'description': component.get('description'),
+                     'due_date': component.get('dstart'),
+                     'status': todo_status_dict[component.get('status')],
+                     }
+                )
+        return tasks
+
 
     def save_tasks(self, tasks):
         """
