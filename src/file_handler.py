@@ -83,21 +83,23 @@ class IcsFileHandler(FileHandler):
         # print([task.to_ical() for task in tasks])
         # TODO: use status as iCal status property, description as ical description property, due date as due, and title as summary
         # vtodos would be perfect however they are not widely supported, implementation using todos passes ical verifier however is incompatible with most calendars
-        todo_status_dict = {"pending": "IN-PROCESS",
-                       "completed": "COMPLETED"}
+
+        # This is awful, but it's the best I can do within the standard.
+        todo_status_dict = {"pending": "TENTATIVE",
+                       "completed": "CONFIRMED"}
         for task in tasks:
             task_dict = task.to_dict()
-            todo = icalendar.Todo()
-            todo.add('dtstamp', datetime.now())
+            event = icalendar.Event()
+            event.add('dtstamp', datetime.now())
             # Title is used as unique identifier for tasks elsewhere
             # in the program, making it a good choice for a unique id
-            todo.add('uid', hash(task_dict["title"]))
-            todo.add('summary', task_dict["title"])
-            todo.add('description', task_dict["description"])
-            todo.add('due', datetime.strptime(task_dict["due_date"], "%d-%m-%Y"))
+            event.add('uid', hash(task_dict["title"]))
+            event.add('summary', task_dict["title"])
+            event.add('description', task_dict["description"])
+            event.add('dtstart', datetime.strptime(task_dict["due_date"], "%d-%m-%Y"))
 
-            todo.add('status', todo_status_dict[task_dict["status"]])
-            self.calender.add_component(todo)
+            event.add('status', todo_status_dict[task_dict["status"]])
+            self.calender.add_component(event)
         with open(self.target_file, "wb") as file:
         # noinspection PyTypeChecker
             file.write(self.calender.to_ical())
