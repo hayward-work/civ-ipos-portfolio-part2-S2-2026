@@ -1,7 +1,7 @@
 import pickle
 import os
-from datetime import date, datetime
-# TODO: REMOVE THIS
+from datetime import datetime
+from src.task import Task
 
 import icalendar
 # TODO: replace with more modern ical module
@@ -78,11 +78,13 @@ class IcsFileHandler(FileHandler):
             for component in ecal.walk(name="VEVENT"):
                 # TODO: PARSE VTEXT BACK INTO STRING
                 tasks.append(
-                    {"title": component.get('summary'),
-                     'description': component.get('description'),
-                     'due_date': component.get('dstart'),
-                     'status': todo_status_dict[component.get('status')],
-                     }
+                    Task.from_dict(
+                        {"title": str(component.get('summary')),
+                         'description': str(component.get('description')),
+                         'due_date': str(component.get('dstart')),
+                         'status': todo_status_dict[str(component.get('status'))],
+                        }
+                    )
                 )
         return tasks
 
