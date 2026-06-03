@@ -84,23 +84,23 @@ class UserInterface:
                                 )
                         self.rich_console.print("Task Added")
                     else:
-                        print("Something has gone wrong. Please try again.")
+                        self.rich_console.print("Something has gone wrong. Please try again.")
                 case "2":
                     title = input("Title of the task to delete: ")
                     if self.task_manager.delete_task(title):
-                        print("Task deleted successfully.")
+                        self.rich_console.print("Task deleted successfully.")
                         self.task_table = self.create_table()
                     else:
-                        print("Task not found.")
+                        self.rich_console.print("Task not found.")
                 case "3":
                     # Decided to still print empty table
                     # as this gives the user feedback
                     # that there *is* a table it's just empty
                     if len(self.task_manager.tasks) <= 0:
-                        print("There are no tasks to display.")
+                        self.rich_console.print("There are no tasks to display.")
                     self.rich_console.print(self.task_table)
                 case "4":
-                    print("Exiting Task Manager.")
+                    self.rich_console.print("Exiting Task Manager.")
                     break
                 case _:
-                    print("Invalid choice. Try again.")
+                    self.rich_console.print("Invalid choice. Try again.")
