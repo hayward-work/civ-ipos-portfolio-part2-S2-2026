@@ -1,7 +1,6 @@
-import sys
 import unittest
 from io import StringIO
-from unittest.mock import patch, create_autospec
+from unittest.mock import patch
 from src.user_interface import UserInterface
 
 
@@ -30,11 +29,17 @@ class TestUserInterface(unittest.TestCase):
         # Better to create a new output var for each test
         # to avoid accidental cross contamination
         output = StringIO()
-        self.ui.rich_console.file=output
+        self.ui.rich_console.file = output
         # This allows me to queue inputs using a python list
         mock_input.side_effect = ["4"]
         self.ui.run()
-        self.assertIn("\nTask Manager CLI\n1. Add Task\n2. Delete Task\n3. List Tasks\n4. Exit",output.getvalue())
+        self.assertIn(
+            "\nTask Manager CLI\n"
+            "1. Add Task\n"
+            "2. Delete Task\n"
+            "3. List Tasks\n"
+            "4. Exit",
+            output.getvalue())
         # # proof everything works, remove later
         # print(output.getvalue())
 
@@ -84,18 +89,29 @@ class TestUserInterface(unittest.TestCase):
     # self.assertEqual(len(self.taskmanager.tasks), 1)
     # self.taskmanager.delete_task("Test Task")
 
-    # Patch prevents making a task file, will need changing when working with filehandler as class
+    # Patch prevents making a task file,
+    # will need changing when working with filehandler as class
     @patch(target='src.task_manager.save_tasks', autospec=True)
     @patch('src.user_interface.input', create=True)
-    def test_add_task_to_table(self, mock_input,patch_save_task):
+    def test_add_task_to_table(self, mock_input, patch_save_task):
         """
         Test adding a task to the task list and listing task table.
         """
         output = StringIO()
         self.ui.rich_console.file = output
-        mock_input.side_effect = ["3", "1", "Test Task", "Description", "01-12-2024", "3", "4"]
+        mock_input.side_effect = ["3",
+                                  "1",
+                                  "Test Task",
+                                  "Description",
+                                  "01-12-2024",
+                                  "3",
+                                  "4"]
         self.ui.run()
-        self.assertIn("There are no tasks to display." and "Test Task" and "Description" and"01-12-2024", output.getvalue())
+        self.assertIn("There are no tasks to display."
+                      "Test Task"
+                      "Description"
+                      "01-12-2024",
+                      output.getvalue())
 
 
 if __name__ == "__main__":

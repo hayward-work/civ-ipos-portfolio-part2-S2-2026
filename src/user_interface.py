@@ -84,7 +84,9 @@ class UserInterface:
                                 )
                         self.rich_console.print("Task Added")
                     else:
-                        self.rich_console.print("Something has gone wrong. Please try again.")
+                        self.rich_console.print(
+                            "Something has gone wrong. Please try again."
+                        )
                 case "2":
                     title = input("Title of the task to delete: ")
                     if self.task_manager.delete_task(title):
