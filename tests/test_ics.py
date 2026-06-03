@@ -9,6 +9,7 @@ class TestIcsFileHandler(unittest.TestCase):
         self.ICS = IcsFileHandler("test_ical.ics")
 
     def tearDown(self):
+        # Clears test file without deleting.
         with open(self.ICS.target_file, "w"):
             pass
 
