@@ -4,6 +4,8 @@ from unittest.mock import patch
 from src.user_interface import UserInterface
 
 
+@patch(target='src.task_manager.save_tasks', autospec=True)
+@patch(target='src.task_manager.load_tasks', autospec=True)
 class TestUserInterface(unittest.TestCase):
     """
     Unit tests for using user interface class over console for
@@ -24,7 +26,7 @@ class TestUserInterface(unittest.TestCase):
         self.ui = None
 
     @patch('src.user_interface.input', create=True)
-    def test_run_user_interface(self, mock_input):
+    def test_run_user_interface(self, mock_input,patch_save_task, patch_load_task):
 
         # Better to create a new output var for each test
         # to avoid accidental cross contamination
@@ -91,9 +93,10 @@ class TestUserInterface(unittest.TestCase):
 
     # Patch prevents making a task file,
     # will need changing when working with filehandler as class
-    @patch(target='src.task_manager.save_tasks', autospec=True)
+
+    # TODO: Fix this
     @patch('src.user_interface.input', create=True)
-    def test_add_task_to_table(self, mock_input, patch_save_task):
+    def test_add_task_to_table(self, mock_input, patch_save_task, patch_load_task):
         """
         Test adding a task to the task list and listing task table.
         """
