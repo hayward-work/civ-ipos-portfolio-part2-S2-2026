@@ -17,6 +17,15 @@ class TestUserInterface(unittest.TestCase):
         Set up the test environment by initialising a user interface object.
         """
         self.ui = UserInterface()
+        # I hate this but patches don't get applied during setup and fixing
+        # the code that causes this to have files in it is out of scope of
+        # this issue.
+
+        # Basically since the task manager tests don't clean up after
+        # themselves, it leaves behind a tasks.bin file that gets read from
+        # during the UI class' construction when creating the rich table
+        self.ui.task_manager.tasks = []
+        self.ui.task_table = self.ui.create_table()
 
     def tearDown(self):
         """
