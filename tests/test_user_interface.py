@@ -5,7 +5,7 @@ from src.user_interface import UserInterface
 
 
 @patch(target='src.task_manager.save_tasks', autospec=True)
-@patch(target='src.task_manager.load_tasks', autospec=True)
+@patch(target='src.task_manager.load_tasks', autospec=True, return_value=None)
 class TestUserInterface(unittest.TestCase):
     """
     Unit tests for using user interface class over console for
@@ -26,7 +26,7 @@ class TestUserInterface(unittest.TestCase):
         self.ui = None
 
     @patch('src.user_interface.input', create=True)
-    def test_run_user_interface(self, mock_input,patch_save_task, patch_load_task):
+    def test_run_user_interface(self, mock_input, patch_save_task, patch_load_task):
 
         # Better to create a new output var for each test
         # to avoid accidental cross contamination
@@ -94,7 +94,6 @@ class TestUserInterface(unittest.TestCase):
     # Patch prevents making a task file,
     # will need changing when working with filehandler as class
 
-    # TODO: Fix this
     @patch('src.user_interface.input', create=True)
     def test_add_task_to_table(self, mock_input, patch_save_task, patch_load_task):
         """
@@ -110,11 +109,22 @@ class TestUserInterface(unittest.TestCase):
                                   "3",
                                   "4"]
         self.ui.run()
-        self.assertIn("There are no tasks to display."
-                      "Test Task"
-                      "Description"
-                      "01-12-2024",
-                      output.getvalue())
+        # This is probably bad practice but I'm lazy so it's staying in.
+        self.assertRegex(output.getvalue(), "("
+                                            "(There are no tasks to display)"
+                                            "(\n|.)*"
+                                            "(Test Task)"
+                                            "(\n|.)*"
+                                            "(Description)"
+                                            "(\n|.)*"
+                                            "(01-12-2024)"
+                                            ")"
+                         )
+        # self.assertIn(["There are no tasks to display." and
+        #               "Test Task" and
+        #               "Description" and
+        #               "01-12-2024",
+        #               output.getvalue())
 
 
 if __name__ == "__main__":
