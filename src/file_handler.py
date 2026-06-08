@@ -10,7 +10,7 @@ from abc import ABC, abstractmethod
 
 
 class FileHandler(ABC):
-    def __init__(self, filepath: str="tasks") -> None:
+    def __init__(self, filepath: str = "tasks") -> None:
         self.target_file = filepath
 
     @abstractmethod
@@ -25,6 +25,7 @@ class FileHandler(ABC):
 class BinaryFileHandler(FileHandler):
     def __init__(self, filepath: str = "tasks.bin") -> None:
         super().__init__(filepath)
+
     def load_tasks(self):
         """
         Load tasks from a binary file using the pickle module.
@@ -37,7 +38,6 @@ class BinaryFileHandler(FileHandler):
             with open(self.target_file, "rb") as file:
                 return pickle.load(file)
         return []
-
 
     def save_tasks(self, tasks):
         """
@@ -55,12 +55,17 @@ class BinaryFileHandler(FileHandler):
             # https://stackoverflow.com/questions/79049420/
             pickle.dump(tasks, file)
 
+
 class IcsFileHandler(FileHandler):
     def __init__(self, filepath: str = "tasks.ics") -> None:
         super().__init__(filepath)
         # TODO: REWRITE THIS SO CALENDAR IS CREATED IN SAVE TASKS METHOD
         self.calender = icalendar.Calendar()
-        self.calender.add("prodid", "https://github.com/NM-TAFE/at2-portfolio-por-part-2-hayward-work/")
+        self.calender.add("prodid",
+
+                          "https://github.com/NM-TAFE/"
+                          "at2-portfolio-por-part-2-hayward-work/"
+                          )
         self.calender.add("version", "2.0")
         self.calender.add("summary", "Task tracker")
 
@@ -72,8 +77,8 @@ class IcsFileHandler(FileHandler):
             list: A list of Task objects loaded from the iCal .ics file.
                 If the file does not exist, an empty list is returned.
         """
-        todo_status_dict = {"TENTATIVE":"pending",
-                            "CONFIRMED":"completed"}
+        todo_status_dict = {"TENTATIVE": "pending",
+                            "CONFIRMED": "completed"}
         tasks = []
         with open(self.target_file, 'rb') as ics:
             ecal = icalendar.Calendar.from_ical(ics.read())
@@ -84,12 +89,10 @@ class IcsFileHandler(FileHandler):
                         {"title": str(component.get('summary')),
                          'description': str(component.get('description')),
                          'due_date': str(component.get('dstart')),
-                         'status': todo_status_dict[str(component.get('status'))],
-                        }
+                         'status': todo_status_dict[str(component.get('status'))]}
                     )
                 )
         return tasks
-
 
     def save_tasks(self, tasks):
         """
@@ -101,12 +104,13 @@ class IcsFileHandler(FileHandler):
         """
         # [icalendar.Calendar(task.to_dict()) for task in tasks]
         # print([task.to_ical() for task in tasks])
-        # TODO: use status as iCal status property, description as ical description property, due date as due, and title as summary
-        # vtodos would be perfect however they are not widely supported, implementation using todos passes ical verifier however is incompatible with most calendars
-
+        # vtodos would be perfect however they are not widely supported,
+        # implementation using todos passes ical verifier
+        # however is incompatible with most calendars
+        #
         # This is awful, but it's the best I can do within the standard.
         todo_status_dict = {"pending": "TENTATIVE",
-                       "completed": "CONFIRMED"}
+                            "completed": "CONFIRMED"}
         for task in tasks:
             task_dict = task.to_dict()
             event = icalendar.Event()
@@ -121,5 +125,5 @@ class IcsFileHandler(FileHandler):
             event.add('status', todo_status_dict[task_dict["status"]])
             self.calender.add_component(event)
         with open(self.target_file, "wb") as file:
-        # noinspection PyTypeChecker
+            # noinspection PyTypeChecker
             file.write(self.calender.to_ical())
