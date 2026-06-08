@@ -35,8 +35,8 @@ def add_task(tasks, title, description, due_date):
         return False
 
     tasks.append(Task(title, description, due_date))
-    BinaryFileHandler.save_tasks(tasks)
-    IcsFileHandler.save_tasks(tasks)
+    BinaryFileHandler().save_tasks(tasks)
+    IcsFileHandler().save_tasks(tasks)
     return True
 
 
@@ -57,8 +57,8 @@ def delete_task(tasks, title):
     for task in tasks:
         if task.title == title:
             tasks.remove(task)
-            BinaryFileHandler.save_tasks(tasks)
-            IcsFileHandler.save_tasks(tasks)
+            BinaryFileHandler().save_tasks(tasks)
+            IcsFileHandler().save_tasks(tasks)
             return True
     return False
 

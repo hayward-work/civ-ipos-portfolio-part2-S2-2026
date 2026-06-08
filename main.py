@@ -3,7 +3,7 @@ from src.file_handler import BinaryFileHandler
 
 
 def main():
-    tasks = BinaryFileHandler.load_tasks()
+    tasks = BinaryFileHandler().load_tasks()
     while True:
         print("\nTask Manager CLI")
         print("1. Add Task")

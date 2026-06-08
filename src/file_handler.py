@@ -10,7 +10,7 @@ from abc import ABC, abstractmethod
 
 
 class FileHandler(ABC):
-    def __init__(self, filepath: str) -> None:
+    def __init__(self, filepath: str="tasks") -> None:
         self.target_file = filepath
 
     @abstractmethod
@@ -23,6 +23,8 @@ class FileHandler(ABC):
 
 
 class BinaryFileHandler(FileHandler):
+    def __init__(self, filepath: str = "tasks.bin") -> None:
+        super().__init__(filepath)
     def load_tasks(self):
         """
         Load tasks from a binary file using the pickle module.
@@ -54,7 +56,7 @@ class BinaryFileHandler(FileHandler):
             pickle.dump(tasks, file)
 
 class IcsFileHandler(FileHandler):
-    def __init__(self, filepath: str):
+    def __init__(self, filepath: str = "tasks.ics") -> None:
         super().__init__(filepath)
         # TODO: REWRITE THIS SO CALENDAR IS CREATED IN SAVE TASKS METHOD
         self.calender = icalendar.Calendar()
