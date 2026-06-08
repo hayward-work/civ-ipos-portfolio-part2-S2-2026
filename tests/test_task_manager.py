@@ -1,6 +1,6 @@
 import unittest
 from src.task_manager import add_task, delete_task, filter_tasks_by_status
-from src.file_handler import save_tasks, load_tasks
+from src.file_handler import BinaryFileHandler
 from src.task import Task
 import os
 
@@ -78,7 +78,6 @@ class TestTaskManager(unittest.TestCase):
         task1 = Task("Task 1", "Desc", "01-12-2024", "pending")
         task2 = Task("Task 2", "Desc", "02-12-2024", "completed")
         self.tasks.extend([task1, task2])
-        save_tasks(self.tasks)
 
         filtered = filter_tasks_by_status(self.tasks, "completed")
         self.assertEqual(len(filtered), 1)
@@ -90,8 +89,7 @@ class TestTaskManager(unittest.TestCase):
         Verify that the saved tasks are correctly loaded with the same data.
         """
         add_task(self.tasks, "Persistent Task", "Description", "01-12-2024")
-        save_tasks(self.tasks)
-        loaded_tasks = load_tasks()
+        loaded_tasks = BinaryFileHandler().load_tasks()
         self.assertEqual(len(loaded_tasks), 1)
         self.assertEqual(loaded_tasks[0].title, "Persistent Task")
 

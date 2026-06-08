@@ -37,3 +37,5 @@ class TestIcsFileHandler(unittest.TestCase):
     #     self.assertTrue(r.status_code == 200, msg="Could not establish connection to validator")
     #     validation = requests.post(url="https://icalendar.org/validator.html#results", data=self.ICS.target_file)
     #     print(validation)
+if __name__ == "__main__":
+    unittest.main()
