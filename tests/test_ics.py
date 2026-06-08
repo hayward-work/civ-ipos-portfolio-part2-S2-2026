@@ -6,7 +6,7 @@ from src.task import Task
 
 class TestIcsFileHandler(unittest.TestCase):
     def setUp(self):
-        self.ICS = IcsFileHandler("test_ical.ics")
+        self.ICS = IcsFileHandler("ical_test.ics")
 
     def tearDown(self):
         # Clears test file without deleting.

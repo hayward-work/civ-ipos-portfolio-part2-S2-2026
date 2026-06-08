@@ -1,5 +1,5 @@
 from src.task import Task
-from src.file_handler import save_tasks
+from src.file_handler import BinaryFileHandler, IcsFileHandler
 from datetime import datetime
 
 
@@ -35,7 +35,8 @@ def add_task(tasks, title, description, due_date):
         return False
 
     tasks.append(Task(title, description, due_date))
-    save_tasks(tasks)
+    BinaryFileHandler.save_tasks(tasks)
+    IcsFileHandler.save_tasks(tasks)
     return True
 
 
@@ -56,7 +57,8 @@ def delete_task(tasks, title):
     for task in tasks:
         if task.title == title:
             tasks.remove(task)
-            save_tasks(tasks)
+            BinaryFileHandler.save_tasks(tasks)
+            IcsFileHandler.save_tasks(tasks)
             return True
     return False
 
