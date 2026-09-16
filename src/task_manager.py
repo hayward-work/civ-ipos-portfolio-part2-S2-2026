@@ -2,9 +2,6 @@ from src.task import Task
 from src.file_handler import load_tasks, save_tasks
 from datetime import datetime
 
-# TODO: Fix the incorrect docstrings in src/task_manager.py
-#  so they match the current class methods and parameters.
-
 
 class TaskManager:
 
