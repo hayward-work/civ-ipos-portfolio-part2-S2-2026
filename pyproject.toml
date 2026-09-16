@@ -16,9 +16,13 @@ requires-python = ">=3.9"
 
 dependencies = [
     "click>=8.0",
+<<<<<<< HEAD
     "python-dateutil>=2.8",
     "rich>=14.3.3",
     "loguru>=0.7.3"
+=======
+    "python-dateutil>=2.8"
+>>>>>>> d6b655131b6d13aa46596ec58d9d97b9b2d4b947
 ]
 
 [project.urls]
@@ -28,4 +32,8 @@ Homepage = "http://github.com/your_username/task-manager-cli"
 package-dir = { "" = "src" }
 
 [tool.setuptools.packages.find]
+<<<<<<< HEAD
 where = ["src"]
+=======
+where = ["src"]
+>>>>>>> d6b655131b6d13aa46596ec58d9d97b9b2d4b947
