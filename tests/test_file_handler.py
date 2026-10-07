@@ -15,7 +15,6 @@ class TestFileHandler(unittest.TestCase):
         # but if the file isn't cleaned up properly
         # this makes the cause more obvious
         self.file_handler = FileHandler(task_file=self.temp_file.name)
-        print(self.temp_file.name)
         self.sample_tasks = [
             Task("Task 1", "Description 1", "12-12-2024", "pending"),
             Task("Task 2", "Description 2", "15-12-2024", "completed"),
