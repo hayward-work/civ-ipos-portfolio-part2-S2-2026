@@ -1,6 +1,6 @@
 import tempfile
 import unittest
-from src.file_handler import FileHandler
+from src.file_handler import BinaryFileHandler as FileHandler
 from src.task import Task
 
 
@@ -14,7 +14,7 @@ class TestFileHandler(unittest.TestCase):
         # technically doesn't need to be .bin
         # but if the file isn't cleaned up properly
         # this makes the cause more obvious
-        self.file_handler = FileHandler(task_file=self.temp_file.name)
+        self.file_handler = FileHandler(filepath=self.temp_file.name)
         self.sample_tasks = [
             Task("Task 1", "Description 1", "12-12-2024", "pending"),
             Task("Task 2", "Description 2", "15-12-2024", "completed"),
