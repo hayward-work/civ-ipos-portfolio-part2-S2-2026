@@ -20,7 +20,8 @@ def add_task(tasks, title, description, due_date):
         ValueError: If the due date is not in the correct format.
 
     Side Effects:
-        - Saves the updated task list to a file using `save_tasks`.
+        - Saves the updated task list to a file using functionality
+          provided by file_handler.`.
     """
     # Prevent duplicate tasks
     if any(task.title == title for task in tasks):
