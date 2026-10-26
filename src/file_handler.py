@@ -88,7 +88,8 @@ class IcsFileHandler(FileHandler):
                     Task.from_dict(
                         {"title": str(component.get('summary')),
                          'description': str(component.get('description')),
-                         'due_date': str(component.get('dtstart').dt.date().strftime("%d-%m-%Y")),
+                         'due_date': str(
+                             component.get('dtstart').dt.date().strftime("%d-%m-%Y")),
                          'status': todo_status_dict[str(component.get('status'))]}
                     )
                 )
