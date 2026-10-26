@@ -4,7 +4,6 @@ from datetime import datetime
 from src.task import Task
 
 import icalendar
-# TODO: replace with more modern ical module
 
 from abc import ABC, abstractmethod
 
@@ -59,7 +58,6 @@ class BinaryFileHandler(FileHandler):
 class IcsFileHandler(FileHandler):
     def __init__(self, filepath: str = "tasks.ics") -> None:
         super().__init__(filepath)
-        # TODO: REWRITE THIS SO CALENDAR IS CREATED IN SAVE TASKS METHOD
         self.calender = icalendar.Calendar()
         self.calender.add("prodid",
 
@@ -83,7 +81,6 @@ class IcsFileHandler(FileHandler):
         with open(self.target_file, 'rb') as ics:
             ecal = icalendar.Calendar.from_ical(ics.read())
             for component in ecal.walk(name="VEVENT"):
-                # TODO: PARSE VTEXT BACK INTO STRING
                 tasks.append(
                     Task.from_dict(
                         {"title": str(component.get('summary')),
