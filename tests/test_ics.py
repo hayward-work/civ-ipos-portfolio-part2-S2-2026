@@ -26,7 +26,7 @@ class TestIcsFileHandler(unittest.TestCase):
 
     def test_file_handler(self) -> None:
         """
-        Test that the load method correctly raises an end of file
+        Test that the load method correctly raises a value
         error when loading from an empty file, then save sample data
         to the file, then reload the tasks back from the file to
         check that file is no longer empty and that the returned
