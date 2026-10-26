@@ -46,8 +46,6 @@ class TestIcsFileHandler(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.file_handler.load_tasks()
         self.file_handler.save_tasks(self.sample_tasks)
-        print([task.to_dict() for task in self.file_handler.load_tasks()])
-        print([task.to_dict() for task in self.sample_tasks])
         self.assertEqual([task.to_dict() for task in self.file_handler.load_tasks()],
                          [task.to_dict() for task in self.sample_tasks])
 
