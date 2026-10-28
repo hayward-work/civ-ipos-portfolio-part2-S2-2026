@@ -1,14 +1,15 @@
 import unittest
 from unittest.mock import patch
 from src.task_manager import add_task, delete_task, filter_tasks_by_status
-from src.file_handler import FileHandler
+from src.file_handler import BinaryFileHandler, IcsFileHandler
 from src.task import Task
 
 
 # Tests run suspiciously fast, pycharm readout reports 0ms
 # seemingly just a display issue but worth noting for later
 # in case I'm wrong.
-@patch.object(FileHandler, 'save_tasks')
+@patch.object(BinaryFileHandler, 'save_tasks')
+@patch.object(IcsFileHandler, 'save_tasks')
 # I believe this should be working, it seems to be anyway,
 # test pass and fail identically to the unpatched version
 # only now it's not performing CRUD operations.
@@ -32,7 +33,7 @@ class TestTaskManager(unittest.TestCase):
         """
         pass
 
-    def test_add_task(self, patch):
+    def test_add_task(self, bin_patch, ics_patch):
         """
         Test adding a new task to the task list.
         Verify that the task is successfully added and the list size increases.
@@ -42,7 +43,7 @@ class TestTaskManager(unittest.TestCase):
         self.assertTrue(result)
         self.assertEqual(len(self.tasks), 1)
 
-    def test_add_duplicate_task(self, patch):
+    def test_add_duplicate_task(self, bin_patch, ics_patch):
         """
         Test adding a duplicate task with the same title.
         Verify that duplicates are not allowed and the function returns False.
@@ -51,7 +52,7 @@ class TestTaskManager(unittest.TestCase):
         result = add_task(self.tasks, "Test Task", "New Description", "02-12-2024")
         self.assertFalse(result)
 
-    def test_add_invalid_due_date(self, patch):
+    def test_add_invalid_due_date(self, bin_patch, ics_patch):
         """
         Test adding a task with an invalid due date format.
         Verify that the function handles invalid input gracefully and returns False.
@@ -59,7 +60,7 @@ class TestTaskManager(unittest.TestCase):
         result = add_task(self.tasks, "Test Task", "Description", "2024-12-01")
         self.assertFalse(result)
 
-    def test_delete_task(self, patch):
+    def test_delete_task(self, bin_patch, ics_patch):
         """
         Test deleting a task by its title.
         Verify that the task is removed from the list and the list size decreases.
@@ -69,7 +70,7 @@ class TestTaskManager(unittest.TestCase):
         self.assertTrue(result)
         self.assertEqual(len(self.tasks), 0)
 
-    def test_filter_tasks_by_status(self, patch):
+    def test_filter_tasks_by_status(self, bin_patch, ics_patch):
         """
         Test filtering tasks based on their status (e.g., 'completed').
         Verify that only tasks matching the specified status are returned.

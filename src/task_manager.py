@@ -1,8 +1,6 @@
 from src.task import Task
-from src.file_handler import FileHandler as FileHandler
+from src.file_handler import BinaryFileHandler, IcsFileHandler
 from datetime import datetime
-
-file_handler = FileHandler()
 
 
 def add_task(tasks, title, description, due_date):
@@ -38,7 +36,8 @@ def add_task(tasks, title, description, due_date):
         return False
 
     tasks.append(Task(title, description, due_date))
-    file_handler.save_tasks(tasks)
+    BinaryFileHandler().save_tasks(tasks)
+    IcsFileHandler().save_tasks(tasks)
     return True
 
 
@@ -54,12 +53,13 @@ def delete_task(tasks, title):
         bool: True if the task was found and deleted, False otherwise.
 
     Side Effects:
-        - Saves the updated task list to a file using `file_handler.save_tasks`.
+        - Saves the updated task list to a file using `save_tasks`.
     """
     for task in tasks:
         if task.title == title:
             tasks.remove(task)
-            file_handler.save_tasks(tasks)
+            BinaryFileHandler().save_tasks(tasks)
+            IcsFileHandler().save_tasks(tasks)
             return True
     return False
 
